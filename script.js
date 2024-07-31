@@ -1,16 +1,16 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
+import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
 
 // Configuração do Firebase
 const firebaseConfig = {
-    apiKey: "AIzaSyDbhOeUDXHmLTUeBgTVu2CoRxGDI-xhJwc",
-    authDomain: "teste-ad0e8.firebaseapp.com",
-    databaseURL: "https://teste-ad0e8-default-rtdb.firebaseio.com",
-    projectId: "teste-ad0e8",
-    storageBucket: "teste-ad0e8.appspot.com",
-    messagingSenderId: "685260421032",
-    appId: "1:685260421032:web:75730b9ea455344cd3cf9d",
-    measurementId: "G-38TYZ998NX"
+    apiKey: "AIzaSyBnV0YfzDGy0z4i_1L2B90Ma0uG4iSja1Q",
+    authDomain: "escola-100bf.firebaseapp.com",
+    databaseURL: "https://escola-100bf-default-rtdb.firebaseio.com",
+    projectId: "escola-100bf",
+    storageBucket: "escola-100bf.appspot.com",
+    messagingSenderId: "643564475769",
+    appId: "1:643564475769:web:3cb893713c956db74b0ba8",
+    measurementId: "G-8NKBPQKC65"
 };
 
 // Inicializa o Firebase
@@ -18,18 +18,23 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
 document.addEventListener('DOMContentLoaded', () => {
-    const btnAlert = document.getElementById('btnAlert');
     const scanQRCodeBtn = document.getElementById('scanQRCode');
+    const searchPatrimonioBtn = document.getElementById('searchPatrimonio');
     const editModal = new bootstrap.Modal(document.getElementById('editModal'));
     const readerElement = document.getElementById('reader');
 
-    btnAlert.addEventListener('click', () => {
-        alert('Botão clicado!');
-    });
+  
 
     scanQRCodeBtn.addEventListener('click', () => {
         readerElement.style.display = 'block';
         startQRCodeScanner();
+    });
+
+    searchPatrimonioBtn.addEventListener('click', () => {
+        const patrimonio = prompt('Digite o número do patrimônio:');
+        if (patrimonio) {
+            openEditModal(patrimonio);
+        }
     });
 
     function startQRCodeScanner() {
@@ -82,7 +87,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     const patrimonio = patrimonios[id];
                     const row = document.createElement('tr');
 
+                    // Adiciona a classe baseada no valor de atualizado
+                    const updatedClass = patrimonio.atualizado ? 'updated-true' : 'updated-false';
+                    row.className = updatedClass; // Define a classe para a linha da tabela
+
                     row.innerHTML = `
+                        <td>${patrimonio.atualizado ? 'Sim' : 'Não'}</td>
                         <td><div class="qrcode" data-value="${patrimonio.patrimonio}"></div></td>
                         <td>${patrimonio.patrimonio}</td>
                         <td>${patrimonio.descricao}</td>
@@ -107,44 +117,60 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function openEditModal(qrCode) {
-        const dbRef = ref(database, 'patrimonios');
+    function openEditModal(patrimonio) {
+        const dbRef = ref(database, 'patrimonios/' + patrimonio);
         get(dbRef).then((snapshot) => {
             if (snapshot.exists()) {
-                const patrimonios = snapshot.val();
-                let found = false;
-    
-                for (let id in patrimonios) {
-                    const patrimonio = patrimonios[id];
-                    if (patrimonio.qr_code === qrCode) {
-                        // Verifica se os elementos existem antes de tentar definir os valores
-                        const fields = ['editQrCode', 'editPatrimonio', 'editDescricao', 'editEmpenho', 'editLotacaoAtual', 'editLotacaoCorreta', 'editResponsavel', 'editEstadoBem', 'editEtiqueta', 'editObservacao'];
-                        fields.forEach(field => {
-                            const element = document.getElementById(field);
-                            if (element) {
-                                element.value = patrimonio[field.replace('edit', '').toLowerCase()];
-                            } else {
-                                console.error(`Element with ID ${field} not found.`);
-                            }
-                        });
-    
-                        editModal.show();
-                        found = true;
-                        break;
-                    }
-                }
-    
-                if (!found) {
-                    console.log("No data available for QR code:", qrCode);
-                }
+                const patrimonioData = snapshot.val();
+
+                // Verifica se os elementos existem antes de tentar definir os valores
+                document.getElementById('editQrCode').value = patrimonioData.qr_code || '';
+                document.getElementById('editPatrimonio').value = patrimonioData.patrimonio || '';
+                document.getElementById('editDescricao').value = patrimonioData.descricao || '';
+                document.getElementById('editEmpenho').value = patrimonioData.empenho || '';
+                document.getElementById('editLotacaoAtual').value = patrimonioData.lotacao_atual || '';
+                document.getElementById('editLotacaoCorreta').value = patrimonioData.lotacao_correta || '';
+                document.getElementById('editResponsavel').value = patrimonioData.responsavel || '';
+                document.getElementById('editEstadoBem').value = patrimonioData.estado_bem || '';
+                document.getElementById('editEtiqueta').value = patrimonioData.etiqueta || '';
+                document.getElementById('editObservacao').value = patrimonioData.observacao || '';
+                document.getElementById('editAtualizado').value = patrimonioData.atualizado ? 'sim' : 'não';
+
+                editModal.show();
             } else {
-                console.log("No data available");
+                console.log("No data available for patrimônio:", patrimonio);
             }
         }).catch((error) => {
             console.error(error);
         });
     }
-    
+
+    // Função que deve ser acessível globalmente para ser chamada pelo botão
+    window.saveChanges = function() {
+        const qrCode = document.getElementById('editQrCode').value;
+        const updatedData = {
+            qr_code: document.getElementById('editQrCode').value,
+            patrimonio: document.getElementById('editPatrimonio').value,
+            descricao: document.getElementById('editDescricao').value,
+            empenho: document.getElementById('editEmpenho').value,
+            lotacao_atual: document.getElementById('editLotacaoAtual').value,
+            lotacao_correta: document.getElementById('editLotacaoCorreta').value,
+            responsavel: document.getElementById('editResponsavel').value,
+            estado_bem: document.getElementById('editEstadoBem').value,
+            etiqueta: document.getElementById('editEtiqueta').value,
+            observacao: document.getElementById('editObservacao').value,
+            atualizado: document.getElementById('editAtualizado').value === 'sim' // Convertendo para booleano
+        };
+
+        const dbRef = ref(database, 'patrimonios/' + qrCode);
+        set(dbRef, updatedData).then(() => {
+            console.log("Data updated successfully.");
+            editModal.hide(); // Fechar o modal após salvar
+            fetchPatrimonios(); // Atualizar a tabela após salvar
+        }).catch((error) => {
+            console.error("Error updating data: ", error);
+        });
+    };
 
     function updateTime() {
         const now = new Date();
