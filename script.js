@@ -82,15 +82,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 const patrimonios = snapshot.val();
                 const tableBody = document.querySelector('#patrimonio-table tbody');
                 tableBody.innerHTML = '';
-
+    
                 for (let id in patrimonios) {
                     const patrimonio = patrimonios[id];
                     const row = document.createElement('tr');
-
+    
                     // Adiciona a classe baseada no valor de atualizado
                     const updatedClass = patrimonio.atualizado ? 'updated-true' : 'updated-false';
                     row.className = updatedClass; // Define a classe para a linha da tabela
-
+    
                     row.innerHTML = `
                         <td>${patrimonio.atualizado ? 'Sim' : 'Não'}</td>
                         <td><div class="qrcode" data-value="${patrimonio.patrimonio}"></div></td>
@@ -104,10 +104,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         <td>${patrimonio.etiqueta}</td>
                         <td>${patrimonio.observacao}</td>
                     `;
-
+    
                     tableBody.appendChild(row);
                 }
-
+    
                 generateQRCode();
             } else {
                 console.log("No data available");
