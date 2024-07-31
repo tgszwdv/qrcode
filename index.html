@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hora em Campo Grande</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Seu CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center">
+                <h1>Hora Atual em Campo Grande, MS</h1>
+                <p id="current-time" class="lead"></p>
+                <button id="btnAlert" class="btn btn-primary mt-3">Clique aqui</button>
+                <button id="btnScanQRCode" class="btn btn-secondary mt-3">Escanear QR Code</button>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-12">
+                <h2>Patrimônio</h2>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover" id="patrimonio-table">
+                        <thead>
+                            <tr>
+                                <th>QR Code</th>
+                                <th>Patrimônio</th>
+                                <th>Descrição</th>
+                                <th>Incorporação</th>
+                                <th>Empenho</th>
+                                <th>Lotação atual</th>
+                                <th>SubLotação 2021</th>
+                                <th>Lotação Correta</th>
+                                <th>Sublotação 2022</th>
+                                <th>Responsável</th>
+                                <th>SIAPE</th>
+                                <th>Estado do Bem</th>
+                                <th>Etiqueta</th>
+                                <th>Observação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dados da tabela serão inseridos aqui -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para atualizar informações -->
+    <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateModalLabel">Atualizar Patrimônio</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="updateForm">
+                        <!-- Campos do formulário para atualização -->
+                        <div class="mb-3">
+                            <label for="patrimonio" class="form-label">Patrimônio</label>
+                            <input type="text" class="form-control" id="patrimonio" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="descricao" class="form-label">Descrição</label>
+                            <input type="text" class="form-control" id="descricao">
+                        </div>
+                        <div class="mb-3">
+                            <label for="incorporacao" class="form-label">Incorporação</label>
+                            <input type="text" class="form-control" id="incorporacao">
+                        </div>
+                        <!-- Adicione outros campos conforme necessário -->
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary">Atualizar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <!-- QRCode.js -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+    <!-- html5-qrcode -->
+    <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
+    <!-- Seu JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
