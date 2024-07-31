@@ -17,10 +17,9 @@ body {
 
 
 .updated-true {
-    background-color: #85ca95; /* Verde claro */
+    background-color: #85ca95; 
 }
 
 .updated-false {
-    background-color: #ad757a; /* Vermelho claro */
-}
+    background-color: #ad757a; 
 
