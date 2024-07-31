@@ -9,3 +9,8 @@ body {
 #patrimonio-table td {
     vertical-align: middle;
 }
+
+.qrcode {
+    width: 100px;
+    height: 100px;
+}
