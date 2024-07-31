@@ -1,5 +1,5 @@
 body {
-    background-color: #f8f9fa;
+    background-color: #adadad;
 }
 
 .table-responsive {
@@ -14,3 +14,13 @@ body {
     width: 100px;
     height: 100px;
 }
+
+
+.updated-true {
+    background-color: #85ca95; /* Verde claro */
+}
+
+.updated-false {
+    background-color: #ad757a; /* Vermelho claro */
+}
+
