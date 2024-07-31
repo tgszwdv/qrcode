@@ -1,107 +1,27 @@
-/* Geral */
 body {
-    background-color: #c5c4c4b4;
-    color: #333;
-    font-family: Arial, sans-serif;
+    background-color: #adadad;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-h1, h2 {
-    color: #004d40;
-}
-
-/* Botões */
-.btn {
-    margin: 5px;
-}
-
-/* Tabela */
 .table-responsive {
     margin-top: 20px;
 }
 
-.table {
-    border-collapse: collapse;
-    width: 100%;
-    background-color: #ffffff;
+#patrimonio-table td {
+    vertical-align: middle;
 }
 
-.table th, .table td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-.table thead th {
-    background-color: #004d40;
-    color: #ffffff;
-}
-
-.table tbody tr {
-    transition: background-color 0.3s ease;
-}
-
-.table tbody tr.updated-true {
-    background-color: #a2c4a9; /* Cor para atualizado = Sim */
-}
-
-.table tbody tr.updated-false {
-    background-color: #b88c90; /* Cor para atualizado = Não */
-}
-
-/* QR Code */
 .qrcode {
-    margin: 0 auto;
-    width: 100px; /* Ajustado para melhor responsividade */
-    height: 100px; /* Ajustado para melhor responsividade */
+    width: 100px;
+    height: 100px;
 }
 
-/* Modal */
-.modal-content {
-    border-radius: 8px;
+
+.updated-true {
+    background-color: #85ca95; 
 }
 
-.modal-header {
-    background-color: #004d40;
-    color: #ffffff;
-}
+.updated-false {
+    background-color: #ad757a; 
 
-.modal-footer {
-    border-top: 1px solid #ddd;
-}
 
-.modal-footer .btn {
-    margin: 0 5px;
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-    .table th, .table td {
-        font-size: 12px; 
-        padding: 8px;
-    }
-
-    .qrcode {
-        width: 80px;
-        height: 80px; 
-    }
-}
-
-@media (max-width: 576px) {
-    .table th, .table td {
-        font-size: 10px; 
-    }
-
-    .qrcode {
-        width: 60px; 
-        height: 60px; 
-    }
-
-    .container {
-        padding: 0 15px; 
-    }
-}
+    
